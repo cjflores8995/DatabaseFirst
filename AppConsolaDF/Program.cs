@@ -1,63 +1,120 @@
 ﻿using DataAccess;
+using DataAccess.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.Entity.Core.EntityClient;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AppConsolaDF
 {
     class Program
     {
-        //creamos una nueva instanciacion del dbContext
-        public static TrabajosConexion db = new TrabajosConexion();
-
         static void Main(string[] args)
         {
-            db.Database.Log = Console.WriteLine;
+            //new TrabajoRepositorio().GetTrabajo(1);
 
-            //Lazy loading
+            //var trabajo = new TrabajoRepositorio().GetTrabajoAsync(1);
+            ////_ = new TrabajoRepositorio().GetTrabajoAsync(1);
+            ////var result = await new TrabajoRepositorio().GetTrabajoAsync(1);
 
-            //List<Trabajos> trabajos = db.Trabajos.ToList();
+            ////Console.WriteLine(trabajo.Result.Titulo);
 
-            //Trabajos trabajo = trabajos.FirstOrDefault();
 
-            ////TipoContrato tipoContratoTrabajo = trabajo.TipoContrato;
+            //Console.WriteLine("Este código se ejecuta despues de llamar al metodo ConsultaSincronica();");
 
-            ////CategoriasTrabajos categoriasTrabajos = trabajo.CategoriasTrabajos;
+            //Console.WriteLine("Este texto se ejecuta de manera secuencial.");
 
-            //Console.WriteLine($"ID: {trabajo.Id}, TÍTULO: {trabajo.Titulo}");
+            //Console.WriteLine("Este texto tambien se ejecuta de manera secuencial.");
 
-            //Console.WriteLine($"TIPO CONTRATO: {trabajo.TipoContrato.Tipo}");
+            ////task.Wait();
 
-            //Console.WriteLine($"CATEGORIA: {trabajo.CategoriasTrabajos.Nombre}");
+            //Console.WriteLine(trabajo.Result.Titulo);
 
-            //Eager Loading
 
-            //var trabajo = db.Trabajos.Include("TipoContrato").Include("CategoriasTrabajos").FirstOrDefault();
+            /////////////////////////////////
+            ///
 
-            //Console.WriteLine($"ID: {trabajo.Id}, TÍTULO: {trabajo.Titulo}");
 
-            //Console.WriteLine($"TIPO CONTRATO: {trabajo.TipoContrato.Tipo}");
+            //Trabajos nuevoTrabajo = new Trabajos
+            //{
+            //    Titulo = "Trabajo con registros",
+            //    Ubicacion = "Ciudad de méxico",
+            //    Salario = 1870,
+            //    Descripcion = "Se necesita de un programador que sepa manejar metodos sincrónicos.",
+            //    TipoContratoId = 2,
+            //    CategoriaTrabajoId = 12,
+            //    FechaRegistro = DateTime.Now,
+            //    FechaModificacion = DateTime.Now,
+            //    Estado = true
+            //};
 
-            //Console.WriteLine($"CATEGORIA: {trabajo.CategoriasTrabajos.Nombre}");
+            //_ = new TrabajoRepositorio().AgregarTrabajoAsync(nuevoTrabajo);
 
-            //explicit loading
+            //Console.WriteLine("Este código se ejecuta despues de llamar al metodo ConsultaSincronica();");
 
-            var trabajo = db.Trabajos.FirstOrDefault();
-            db.Entry(trabajo).Reference(x => x.TipoContrato).Load();
-            db.Entry(trabajo).Reference(x => x.CategoriasTrabajos).Load();
+            //Console.WriteLine("Este texto se ejecuta de manera secuencial.");
 
-            Console.WriteLine($"ID: {trabajo.Id}, TÍTULO: {trabajo.Titulo}");
+            //Console.WriteLine("Este texto tambien se ejecuta de manera secuencial.");
 
-            Console.WriteLine($"TIPO CONTRATO: {trabajo.TipoContrato.Tipo}");
+            //task.Wait();
 
-            Console.WriteLine($"CATEGORIA: {trabajo.CategoriasTrabajos.Nombre}");
+            ////////////////
+
+            //Trabajos nuevoTrabajo = new Trabajos
+            //{
+            //    Titulo = "Trabajo con registros",
+            //    Ubicacion = "Ciudad de méxico",
+            //    Salario = 1870,
+            //    Descripcion = "Se necesita de un programador que sepa manejar metodos sincrónicos.",
+            //    TipoContratoId = 2,
+            //    CategoriaTrabajoId = 12,
+            //    FechaRegistro = DateTime.Now,
+            //    FechaModificacion = DateTime.Now,
+            //    Estado = true
+            //};
+
+            //new TrabajoRepositorio().AgregarTrabajo(nuevoTrabajo);
+
+            //Console.WriteLine("Este código se ejecuta despues de llamar al metodo ConsultaSincronica();");
+
+            //Console.WriteLine("Este texto se ejecuta de manera secuencial.");
+
+            //Console.WriteLine("Este texto tambien se ejecuta de manera secuencial.");
+
+            Trabajos tr = new Trabajos
+            {
+                Titulo = "Trabajo con registros",
+                Ubicacion = "Ciudad de méxico",
+                Salario = 1870,
+                Descripcion = "Se necesita de un programador que sepa manejar metodos sincrónicos.",
+                TipoContratoId = 2,
+                CategoriaTrabajoId = 12,
+                FechaRegistro = DateTime.Now,
+                FechaModificacion = DateTime.Now,
+                Estado = true
+            };
+
+            var respuesta = new TrabajoRepositorio().AgregarTrabajoAsync(tr);
+
+            Console.WriteLine("Este código se ejecuta despues de llamar al metodo ConsultaSincronica();");
+
+            Console.WriteLine("Este texto se ejecuta de manera secuencial.");
+
+            Console.WriteLine("Este texto tambien se ejecuta de manera secuencial.");
+
+            Console.WriteLine(respuesta.Result.Respuesta);
+
 
             Console.ReadKey();
         }
+
+
+        
     }
 }
