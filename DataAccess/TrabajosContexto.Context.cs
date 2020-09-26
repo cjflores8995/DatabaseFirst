@@ -19,6 +19,10 @@ namespace DataAccess
         public TrabajosConexion()
             : base("name=TrabajosConexion")
         {
+            //para que lady loading funcione los campos deben estar en true
+
+            this.Configuration.ProxyCreationEnabled = false;
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
