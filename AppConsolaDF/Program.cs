@@ -1,5 +1,5 @@
 ﻿using DataAccess;
-using DataAccess.Repository;
+using DataAccess.Repositorio;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,79 +17,8 @@ namespace AppConsolaDF
     {
         static void Main(string[] args)
         {
-            //new TrabajoRepositorio().GetTrabajo(1);
-
-            //var trabajo = new TrabajoRepositorio().GetTrabajoAsync(1);
-            ////_ = new TrabajoRepositorio().GetTrabajoAsync(1);
-            ////var result = await new TrabajoRepositorio().GetTrabajoAsync(1);
-
-            ////Console.WriteLine(trabajo.Result.Titulo);
-
-
-            //Console.WriteLine("Este código se ejecuta despues de llamar al metodo ConsultaSincronica();");
-
-            //Console.WriteLine("Este texto se ejecuta de manera secuencial.");
-
-            //Console.WriteLine("Este texto tambien se ejecuta de manera secuencial.");
-
-            ////task.Wait();
-
-            //Console.WriteLine(trabajo.Result.Titulo);
-
-
-            /////////////////////////////////
-            ///
-
-
-            //Trabajos nuevoTrabajo = new Trabajos
-            //{
-            //    Titulo = "Trabajo con registros",
-            //    Ubicacion = "Ciudad de méxico",
-            //    Salario = 1870,
-            //    Descripcion = "Se necesita de un programador que sepa manejar metodos sincrónicos.",
-            //    TipoContratoId = 2,
-            //    CategoriaTrabajoId = 12,
-            //    FechaRegistro = DateTime.Now,
-            //    FechaModificacion = DateTime.Now,
-            //    Estado = true
-            //};
-
-            //_ = new TrabajoRepositorio().AgregarTrabajoAsync(nuevoTrabajo);
-
-            //Console.WriteLine("Este código se ejecuta despues de llamar al metodo ConsultaSincronica();");
-
-            //Console.WriteLine("Este texto se ejecuta de manera secuencial.");
-
-            //Console.WriteLine("Este texto tambien se ejecuta de manera secuencial.");
-
-            //task.Wait();
-
-            ////////////////
-
-            //Trabajos nuevoTrabajo = new Trabajos
-            //{
-            //    Titulo = "Trabajo con registros",
-            //    Ubicacion = "Ciudad de méxico",
-            //    Salario = 1870,
-            //    Descripcion = "Se necesita de un programador que sepa manejar metodos sincrónicos.",
-            //    TipoContratoId = 2,
-            //    CategoriaTrabajoId = 12,
-            //    FechaRegistro = DateTime.Now,
-            //    FechaModificacion = DateTime.Now,
-            //    Estado = true
-            //};
-
-            //new TrabajoRepositorio().AgregarTrabajo(nuevoTrabajo);
-
-            //Console.WriteLine("Este código se ejecuta despues de llamar al metodo ConsultaSincronica();");
-
-            //Console.WriteLine("Este texto se ejecuta de manera secuencial.");
-
-            //Console.WriteLine("Este texto tambien se ejecuta de manera secuencial.");
-
-            Trabajos tr = new Trabajos
-            {
-                Titulo = "Trabajo con registros",
+            Trabajos trabajo = new Trabajos {
+                Titulo = "Trabajo con registros sincrónicos",
                 Ubicacion = "Ciudad de méxico",
                 Salario = 1870,
                 Descripcion = "Se necesita de un programador que sepa manejar metodos sincrónicos.",
@@ -100,15 +29,50 @@ namespace AppConsolaDF
                 Estado = true
             };
 
-            var respuesta = new TrabajoRepositorio().AgregarTrabajoAsync(tr);
+            var trabajoAsincronico = new TrabajoRepositorio().AgregarTrabajoAsync(trabajo);
 
-            Console.WriteLine("Este código se ejecuta despues de llamar al metodo ConsultaSincronica();");
+            Console.WriteLine("3. este código se ejecuta despues de obtener un trabajo.");
 
-            Console.WriteLine("Este texto se ejecuta de manera secuencial.");
+            Console.WriteLine("4. este código se ejecuta a continuación.");
 
-            Console.WriteLine("Este texto tambien se ejecuta de manera secuencial.");
+            Console.WriteLine("5. este código se ejecuta al final.");
 
-            Console.WriteLine(respuesta.Result.Respuesta);
+            Console.WriteLine($"Estado: {trabajoAsincronico.Result.OK}, Mensaje: {trabajoAsincronico.Result.Mensaje}");
+
+
+            //var agregarTrabajo = new TrabajoRepositorio().AgregarTrabajo(trabajo);
+
+            //Console.WriteLine("3. este código se ejecuta despues de obtener un trabajo.");
+
+            //Console.WriteLine("4. este código se ejecuta a continuación.");
+
+            //Console.WriteLine("5. este código se ejecuta al final.");
+
+            //Console.WriteLine($"ID: {trabajo.Id}, TÍTULO: {trabajo.Titulo}");
+
+            //Console.WriteLine($"ESTADO: {agregarTrabajo.OK}, MENSAJE: {agregarTrabajo.Mensaje}");
+
+
+            //var trabajo = new TrabajoRepositorio().ObtenerTrabajo(1);
+
+            //Console.WriteLine("3. este código se ejecuta despues de obtener un trabajo.");
+
+            //Console.WriteLine("4. este código se ejecuta a continuación.");
+
+            //Console.WriteLine("5. este código se ejecuta al final.");
+
+            //Console.WriteLine($"ID: {trabajo.Id}, TÍTULO: {trabajo.Titulo}");
+
+            //ejecutar
+            //var trabajo = new TrabajoRepositorio().ObtenerTrabajoAsync(1);
+
+            //Console.WriteLine("3. este código se ejecuta despues de obtener un trabajo.");
+
+            //Console.WriteLine("4. este código se ejecuta a continuación.");
+
+            //Console.WriteLine("5. este código se ejecuta al final.");
+
+            //Console.WriteLine($"ID: {trabajo.Result.Id}, TÍTULO: {trabajo.Result.Titulo}");
 
 
             Console.ReadKey();

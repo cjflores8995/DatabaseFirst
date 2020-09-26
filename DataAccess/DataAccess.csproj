@@ -54,7 +54,7 @@
       <DependentUpon>TrabajosContexto.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\TrabajoRepositorio.cs" />
+    <Compile Include="Repositorio\TrabajoRepositorio.cs" />
     <Compile Include="TipoContrato.cs">
       <DependentUpon>TrabajosContexto.tt</DependentUpon>
     </Compile>
