@@ -17,103 +17,97 @@ namespace AppConsolaDF
 
         static void Main(string[] args)
         {
-            //sintaxis de metodo
+            //find
+            //var trabajo = db.Trabajos.Find(12);
 
-            //var trabajos = db.Trabajos.ToList();
+            //Console.WriteLine($"ID: {trabajo.Id}, TITULO: {trabajo.Titulo}");
+
+            //first, firstOrDefault
+            //var trabajo = db.Trabajos.FirstOrDefault();
+
+            //last, lastOrDefault
+            //var trabajo = db.Trabajos.AsEnumerable().LastOrDefault();
+
+            //Console.WriteLine($"ID: {trabajo.Id}, TITULO: {trabajo.Titulo}");
+
+            //where 
+            //var trabajos = db.Trabajos.Where(x => x.Salario >= 1500).ToList();
 
             //foreach(var trabajo in trabajos)
             //{
-            //    Console.WriteLine($"ID: {trabajo.Id}, SALARIO: {trabajo.Salario}, TITULO: {trabajo.Titulo}");
+            //    Console.WriteLine($"ID: {trabajo.Id}, TITULO: {trabajo.Titulo}, SALARIO: {trabajo.Salario}");
             //}
 
-            //sintaxis de consulta
-
-            //var trabajos = from tr in db.Trabajos
-            //               where tr.Salario < 1000
-            //               select tr;
+            //select
+            //var trabajos = db.Trabajos.Select(x => new { x.Id, x.Titulo, x.Descripcion}).ToList();
 
             //foreach (var trabajo in trabajos)
             //{
-            //    Console.WriteLine($"ID: {trabajo.Id}, SALARIO: {trabajo.Salario}, TITULO: {trabajo.Titulo}");
+            //    Console.WriteLine($"ID: {trabajo.Id}, TITULO: {trabajo.Titulo}, SALARIO: {trabajo.Descripcion}");
             //}
 
-            //entitySQL
 
-            //using (var con = new EntityConnection("name=TrabajosConexion"))
-            //{
-            //    con.Open();
-            //    EntityCommand cmd = con.CreateCommand();
-            //    cmd.CommandText = "SELECT VALUE st FROM TrabajosConexion.Trabajos as st where st.Salario > 1500 ";
+            //count
+            //var cantidadTrabajos = db.Trabajos.Count();
 
-            //    List<Trabajos> trabajos = new List<Trabajos>();
+            //Console.WriteLine($"Cantidad de trabajos: {cantidadTrabajos}");
 
-            //    using (EntityDataReader dataReader = cmd.ExecuteReader(CommandBehavior.SequentialAccess | CommandBehavior.CloseConnection))
-            //    {
-            //        while (dataReader.Read())
-            //        {
-            //            Trabajos tr = new Trabajos
-            //            {
-            //                Id = dataReader.GetInt32(0),
-            //                Titulo = dataReader.GetString(1),
-            //                Ubicacion = dataReader.GetString(2),
-            //                Salario = dataReader.GetDouble(3),
-            //                Descripcion = dataReader.GetString(4),
-            //                TipoContratoId = dataReader.GetInt32(5),
-            //                CategoriaTrabajoId = dataReader.GetInt32(6),
-            //                FechaRegistro = dataReader.GetDateTime(7),
-            //                FechaModificacion = dataReader.GetDateTime(8),
-            //                Estado = dataReader.GetBoolean(9)
-            //            };
 
-            //            trabajos.Add(tr);
-            //        }
 
-            //        foreach (var trabajo in trabajos)
-            //        {
-            //            Console.WriteLine($"ID: {trabajo.Id}, SALARIO: {trabajo.Salario}, TITULO: {trabajo.Titulo}");
-            //        }
-            //    }
-            //}
+            //sum, min, max, average
 
-            //sintaxis sql
+            //var totalSalarios = db.Trabajos.Sum(x => x.Salario);
 
-            //var trabajos = db.Trabajos.SqlQuery("select * from trabajos where id > 10").ToList<Trabajos>();
+            //Console.WriteLine($"Total salarios: {totalSalarios}");
+
+            //var salarioMin = db.Trabajos.Min(x => x.Salario);
+
+            //Console.WriteLine($"Salario mínimo: {salarioMin}");
+
+            //var salarioMax = db.Trabajos.Max(x => x.Salario);
+
+            //Console.WriteLine($"Salario máximo: {salarioMax}");
+
+            //var promedioSalarios = db.Trabajos.Average(x => x.Salario);
+
+            //Console.WriteLine($"Promedio salarios: {promedioSalarios}");
+
+            db.Database.Log = Console.WriteLine;
+
+            //take
+
+            //var trabajos = db.Trabajos.Take(5);
 
             //foreach (var trabajo in trabajos)
             //{
-            //    Console.WriteLine($"ID: {trabajo.Id}, SALARIO: {trabajo.Salario}, TITULO: {trabajo.Titulo}");
+            //    Console.WriteLine($"ID: {trabajo.Id}, TITULO: {trabajo.Titulo}, SALARIO: {trabajo.Salario}");
             //}
 
-            //string titulo = "Chofer de Reparto - Toluca";
+            //skip
+            //var trabajos = db.Trabajos.OrderBy(x => x.Salario).Skip(5);
 
-            //var trabajo = db.Trabajos
-            //    .SqlQuery("select * from Trabajos where Titulo = @Titulo", new SqlParameter("@Titulo", titulo))
-            //    .FirstOrDefault();
+            //foreach (var trabajo in trabajos)
+            //{
+            //    Console.WriteLine($"ID: {trabajo.Id}, TITULO: {trabajo.Titulo}, SALARIO: {trabajo.Salario}");
+            //}
 
-            //Console.WriteLine($"ID: {trabajo.Id}, SALARIO: {trabajo.Salario}, TITULO: {trabajo.Titulo}");
+            //any
+            //if (db.Trabajos.Where(x => x.Salario > 20000).Any())
+            //{
+            //    Console.WriteLine("la lista contiene datos");
+            //} else
+            //{
+            //    Console.WriteLine("la lista no contiene datos");
+            //}
 
-            //string _titulo = "Jefe de Marketing y Publicidad";
-
-            //string tituloTrabajo = db.Database
-            //    .SqlQuery<string>("select descripcion from Trabajos where Titulo = @Titulo", new SqlParameter("@Titulo", _titulo))
-            //    .FirstOrDefault();
-
-            //Console.WriteLine(tituloTrabajo);
-
-            //int numeroFilasActualizadas = db.Database
-            //    .ExecuteSqlCommand("update Trabajos set Titulo = 'Se busca programador FullStack' where id = 1");
-
-            //Console.WriteLine($"número de filas actualizadas: {numeroFilasActualizadas}");
-
-            //int numeroFilasInsertadas = db.Database
-            //    .ExecuteSqlCommand("insert into Trabajos(titulo, Ubicacion, Salario, Descripcion, TipoContratoId, CategoriaTrabajoId, FechaRegistro, FechaModificacion, Estado)values('se necesita programador de EntityFramework','Toluca',1550,'se necesita un programador que conozca a fonso sobre el framework de Entity Framework 6+',1,12,GETDATE(),GETDATE(),1)");
-
-            //Console.WriteLine("cantidad de registros insertados: " + numeroFilasInsertadas);
-
-            int numeroFilasEliminadas = db.Database
-                .ExecuteSqlCommand("delete from Trabajos where id = 28");
-
-            Console.WriteLine("número de filas eliminadas: " + numeroFilasEliminadas);
+            //all
+            //if(db.Trabajos.All(x => x.Salario > 1000))
+            //{
+            //    Console.WriteLine("Todos los salarios son mayores a $1000.00");
+            //} else
+            //{
+            //    Console.WriteLine("No todos los salarios son mayores a $1000.00");
+            //}
 
             Console.ReadKey();
         }
