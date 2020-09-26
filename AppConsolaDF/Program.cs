@@ -1,5 +1,4 @@
 ﻿using DataAccess;
-using DataAccess.Repositorio;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,68 +16,76 @@ namespace AppConsolaDF
     {
         static void Main(string[] args)
         {
-            Trabajos trabajo = new Trabajos {
-                Titulo = "Trabajo con registros sincrónicos",
-                Ubicacion = "Ciudad de méxico",
-                Salario = 1870,
-                Descripcion = "Se necesita de un programador que sepa manejar metodos sincrónicos.",
-                TipoContratoId = 2,
-                CategoriaTrabajoId = 12,
-                FechaRegistro = DateTime.Now,
-                FechaModificacion = DateTime.Now,
-                Estado = true
-            };
+            using (var db = new TrabajosConexion())
+            {
+                db.Database.Log = Console.WriteLine;
 
-            var trabajoAsincronico = new TrabajoRepositorio().AgregarTrabajoAsync(trabajo);
+                using (DbContextTransaction transaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        //codigo
+                        Trabajos trabajo1 = new Trabajos
+                        {
+                            Titulo = "trabajo 1, continua en trabajo 2",
+                            Ubicacion = "Ciudad de méxico",
+                            Salario = 1870,
+                            Descripcion = "este trabajo se ingresa en primer lugar",
+                            TipoContratoId = 2,
+                            CategoriaTrabajoId = 12,
+                            FechaRegistro = DateTime.Now,
+                            FechaModificacion = DateTime.Now,
+                            Estado = true
+                        };
 
-            Console.WriteLine("3. este código se ejecuta despues de obtener un trabajo.");
+                        db.Entry(trabajo1).State = EntityState.Added;
+                        db.SaveChanges();
 
-            Console.WriteLine("4. este código se ejecuta a continuación.");
+                        Trabajos trabajo2 = new Trabajos
+                        {
+                            Titulo = "trabajo 2, continua el trabajo 3",
+                            Ubicacion = "Ciudad de méxico",
+                            Salario = 1870,
+                            Descripcion = "este trabajo se ingresa en segundo lugar.",
+                            TipoContratoId = 2,
+                            CategoriaTrabajoId = 12,
+                            FechaRegistro = DateTime.Now,
+                            FechaModificacion = DateTime.Now,
+                            Estado = true
+                        };
 
-            Console.WriteLine("5. este código se ejecuta al final.");
+                        db.Entry(trabajo2).State = EntityState.Added;
+                        db.SaveChanges();
 
-            Console.WriteLine($"Estado: {trabajoAsincronico.Result.OK}, Mensaje: {trabajoAsincronico.Result.Mensaje}");
+                        Trabajos trabajo3 = new Trabajos
+                        {
+                            Titulo = "trabajo 3, finaliza el proceso",
+                            Ubicacion = "Ciudad de méxico",
+                            Salario = 1870,
+                            Descripcion = "este trabajo se ingresa en tercer lugar.",
+                            TipoContratoId = 2,
+                            CategoriaTrabajoId = 12,
+                            FechaRegistro = DateTime.Now,
+                            FechaModificacion = DateTime.Now,
+                            Estado = true
+                        };
 
+                        db.Entry(trabajo3).State = EntityState.Added;
+                        db.SaveChanges();
 
-            //var agregarTrabajo = new TrabajoRepositorio().AgregarTrabajo(trabajo);
+                        transaction.Commit();
 
-            //Console.WriteLine("3. este código se ejecuta despues de obtener un trabajo.");
-
-            //Console.WriteLine("4. este código se ejecuta a continuación.");
-
-            //Console.WriteLine("5. este código se ejecuta al final.");
-
-            //Console.WriteLine($"ID: {trabajo.Id}, TÍTULO: {trabajo.Titulo}");
-
-            //Console.WriteLine($"ESTADO: {agregarTrabajo.OK}, MENSAJE: {agregarTrabajo.Mensaje}");
-
-
-            //var trabajo = new TrabajoRepositorio().ObtenerTrabajo(1);
-
-            //Console.WriteLine("3. este código se ejecuta despues de obtener un trabajo.");
-
-            //Console.WriteLine("4. este código se ejecuta a continuación.");
-
-            //Console.WriteLine("5. este código se ejecuta al final.");
-
-            //Console.WriteLine($"ID: {trabajo.Id}, TÍTULO: {trabajo.Titulo}");
-
-            //ejecutar
-            //var trabajo = new TrabajoRepositorio().ObtenerTrabajoAsync(1);
-
-            //Console.WriteLine("3. este código se ejecuta despues de obtener un trabajo.");
-
-            //Console.WriteLine("4. este código se ejecuta a continuación.");
-
-            //Console.WriteLine("5. este código se ejecuta al final.");
-
-            //Console.WriteLine($"ID: {trabajo.Result.Id}, TÍTULO: {trabajo.Result.Titulo}");
-
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
 
             Console.ReadKey();
         }
 
-
-        
     }
 }
